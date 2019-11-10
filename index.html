@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta charset="utf-8"/>
+<!--Name: Michael Hammond;
+  File Name: Portfolio.html;
+-->
+<style>
+.answer
+{
+    display: none;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<p id = "test" ></p>
+<body>
+<script>
+    var allTextLines = 
+    [
+["question","answer"],
+["What is the answer to everything in the universe?","42"]
+];
+var lines = [];
+$(document).ready(function() {
+    parseDataIntoHTML();
+});
+function parseDataIntoHTML()
+{
+    var headers = allTextLines[0];
+    var toInnerHTML = "";
+    for (var i=1; i<allTextLines.length; i++) {
+        var line = allTextLines[i];
+        if (line.length == headers.length) {
+            for (var j=0; j<headers.length; j++) {
+                if (headers[j] === "question")
+                {
+                    toInnerHTML = toInnerHTML.concat("<div class='question' id='question".concat(i).concat("'>").concat(i).concat(" : ").concat(line[0]).concat("</div><br><br>"));
+                }
+                else if (headers[j] === "answer")
+                {
+                    toInnerHTML = toInnerHTML.concat("<input type='text' id='choice".concat(i).concat("' class='choice'></input><br><br><div class='answer' id='answer".concat(i).concat("' >").concat(line[1]).concat("</div>")));
+                }
+            }
+        }
+    }
+    alert(toInnerHTML);
+    document.getElementById("test").innerHTML = toInnerHTML;
+}
+function printExam()
+{
+    window.print();
+}
+function printExamAnswers()
+{
+    for (var i = 1; i < allTextLines.length; i++)
+    {
+        document.getElementById("answer".concat(i)).style.display = "block";
+    }
+    window.print();
+    for (var i = 1; i < allTextLines.length; i++)
+    {
+        document.getElementById("answer".concat(i)).style.display = "none";
+    }
+}
+function showAnswers()
+{
+    for (var i = 1; i < allTextLines.length; i++)
+    {
+        document.getElementById("answer".concat(i)).style.display = "block";
+    }
+}
+function hideAnswers()
+{
+    for (var i = 1; i < allTextLines.length; i++)
+    {
+        document.getElementById("answer".concat(i)).style.display = "none";
+    }
+}
+function checkAnswers()
+{
+    for (var i = 1; i < allTextLines.length; i++)
+    {
+        if (document.getElementById("answer".concat(i)).innerHTML === document.getElementById("choice".concat(i)).value)
+        {
+            document.getElementById("choice".concat(i)).style.borderColor = "green";
+        }
+        else
+        {
+            document.getElementById("choice".concat(i)).style.borderColor = "red";
+        }
+    }
+}
+</script>
+<button onclick="checkAnswers()">Check Answers</button>
+<button onclick="showAnswers()">Show Answers</button>
+<button onclick="hideAnswers()">Hide Answers</button>
+<button onclick="printExam()">Print Exam</button>
+<button onclick="printExamAnswers()">Print Exam with Answers</button>               
+</body>
+</html> 
